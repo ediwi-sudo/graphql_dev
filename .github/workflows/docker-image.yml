@@ -30,10 +30,12 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t ewdeve/graphql-git:0.0.2 .
+        docker build -t ewdeve/graphql-git:latest .
 
     - name: push Docker Image
       run: |
         docker push ewdeve/graphql-git:0.0.2
+        docker push ewdeve/graphql-git:latest
 
         
     # - name: Build the Docker image
