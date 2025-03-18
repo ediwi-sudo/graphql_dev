@@ -30,23 +30,24 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.USER_DOCKER }}
         DOCKER_PASSWORD: ${{ secrets.PASS_DOCKER }}
-        NEW_VERSION: ${{ steps.version.outputs.version }}
-        
       run: |
-        echo "New version: $NEW_VERSION "
         echo "Iniciando login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin del login"
 
-   # - name: Build Docker image
-   #   run: |
-   #     docker build -t ewdeve/graphql-git:0.0.2 .
-   #     docker build -t ewdeve/graphql-git:latest .
+    - name: Build Docker image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker build -t ewdeve/graphql-git:$NEW_VERSION .
+        docker build -t ewdeve/graphql-git:latest .
 
-   # - name: push Docker Image
-   #   run: |
-   #     docker push ewdeve/graphql-git:0.0.2
-   #     docker push ewdeve/graphql-git:latest
+    - name: push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker push ewdeve/graphql-git:$NEW_VERSION
+        docker push ewdeve/graphql-git:latest
 
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
